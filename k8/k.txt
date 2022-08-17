@@ -1,0 +1,14 @@
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "dns": [
+    "10.199.238.10",
+    "10.199.242.10",
+    "10.199.238.14"
+  ],
+  "storage-driver": "overlay2",
+  "insecure-registries" : ["ap-sc.lss.emc.com:8446"]
+}

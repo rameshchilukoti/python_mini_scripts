@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+import random
+import uuid
+import sys
+import os
+#Provide it as in hbase_load.sh
+DATA_DIR='C:\\Users\\crasta\\PycharmProjects\\Kubernetes_05_November\\hadoop'
+#
+#outsize = 1024 * 1024 # 1GB
+size=10
+# if len(sys.argv) > 1:
+if size > 1:
+    # size=int(sys.argv[1])
+    size = 10
+
+else:
+    print("RECORD size needed, Exiting..!")
+    quit()
+if len(sys.argv) > 2:
+    count=sys.argv[2]
+else:
+    count='1'
+outfile = DATA_DIR +"\\" + "hbase_data" + count + ".csv"
+#
+if os.path.exists(outfile):
+  os.remove(outfile)
+#
+with open(outfile, 'ab') as csvfile:
+    row = 0
+    while row < size:
+        txt = '%s\n' % (uuid.uuid4())
+        f1,f2,f3,f4,f5=txt.split("-")
+        fields = f1 + "," + f2 + f4 + "," + f5
+        #txt = '%s,%.6f,%.6f,%i\n' % (uuid.uuid4(), random.random()*50, random.random()*50, random.randrange(1000))
+        row += 1
+        #field, line in enumerate(fields, 1):
+        csvfile.write(fields)
