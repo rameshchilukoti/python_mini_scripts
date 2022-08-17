@@ -8,7 +8,6 @@ import pysftp as sftp
 
 username = "administrator"
 password = "emclegato"
-cluster_id = "demo-cluster-1zg"
 folder ="/home/administrator"
 
 # vc_ip = "10.226.79.73"
