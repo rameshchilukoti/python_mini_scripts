@@ -8,9 +8,9 @@ import re
 # client.connect(go2host, username=go2username, password=go2password)
 # storage_show = "cd /;./go2 10.110.218.71"
 # stdin, stdout, stderr = client.exec_command(storage_show)
-password = "abc123"
+password = "emclegato"
 username = "sysadmin"
-hosts = "10.226.78.6", ""
+hosts = "10.125.12.45", "10.118.211.14"
 for host in hosts:
     #establish ssh connection with DD
     print(host)
