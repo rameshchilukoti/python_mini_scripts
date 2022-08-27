@@ -81,6 +81,7 @@ for f in fh:
 
 
     #root user
+    execommand("mkdir /home/administrator/automation")
     push_file_to_server(host, "resolv.conf")
     coomand1 = "echo \"Changeme@1\" | sudo -S cp /home/administrator/automation/resolv.conf /etc/resolv.conf"
     command2 = "echo \"Changeme@1\" | sudo -S docker login -u=chilur -p=Ram$india1"
