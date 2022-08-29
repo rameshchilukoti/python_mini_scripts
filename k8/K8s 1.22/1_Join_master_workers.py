@@ -3,11 +3,11 @@ import paramiko
 import time
 
 username = "administrator"
-password = "Changeme@1"      # Change into your Kuberenets master password
+password = "emclegato"      # Change into your Kuberenets master password
 destination_filepath = "/home/administrator/PPDMCTL"  # Destinaton folder in your Kuberenets master
 
-master ="10.226.79.152"
-workers = "10.226.79.153", ""
+master ="10.198.184.202"
+workers = "10.198.184.203", ""
 folder = "/home/administrator/automation"
 client = paramiko.SSHClient()
 
