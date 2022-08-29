@@ -66,7 +66,7 @@ execommand(client, "mkdir {}".format(folder))
 #root user
 execommand(client, "echo \"{}\" | sudo -S kubeadm init --apiserver-advertise-address={} --pod-network-cidr=10.244.0.0/16 \n".format(password,master))
 time.sleep(10)
-execommand((client,"kubectl get pods -A"))
+execommand(client,"kubectl get pods -A")
 
 # Administrator user
 execommand(client, "mkdir -p $HOME/.kube")
