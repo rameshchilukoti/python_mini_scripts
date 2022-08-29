@@ -3,11 +3,11 @@ import paramiko
 import time
 
 username = "administrator"
-password = "emclegato"      # Change into your Kuberenets master password
+password = "Changeme@1"      # Change into your Kuberenets master password
 destination_filepath = "/home/administrator/PPDMCTL"  # Destinaton folder in your Kuberenets master
 
-master ="10.98.184.133"
-workers = "10.98.184.134", ""
+master ="10.226.79.152"
+workers = "10.226.79.153", ""
 folder = "/home/administrator/automation"
 client = paramiko.SSHClient()
 
@@ -60,19 +60,21 @@ def push_file_to_server(host, file):
 
 ##### Master node
 host=master
-print("In master ".format(host))
+print("In master {}".format(host))
 client = getClient(host)
 execommand(client, "mkdir {}".format(folder))
 #root user
-execommand(client, "echo \"{}\" | sudo -S kubeadm init --apiserver-advertise-address={} --pod-network-cidr=10.244.0.0/16".format(password,master))
-time.sleep(150)
+execommand(client, "echo \"{}\" | sudo -S kubeadm init --apiserver-advertise-address={} --pod-network-cidr=10.244.0.0/16 \n".format(password,master))
+time.sleep(10)
+execommand((client,"kubectl get pods -A"))
 
 # Administrator user
 execommand(client, "mkdir -p $HOME/.kube")
 execommand(client, "echo \"{}\" | sudo -S sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config".format(password))
 execommand(client, "echo \"{}\" | sudo -S sudo chown $(id -u):$(id -g) $HOME/.kube/config".format(password))
-time.sleep(60)
-execommand(client, "kubectl get pods -A")
+time.sleep(10)
+get_pods = "kubectl get pods -A"
+execommand(client, get_pods)
 
 
 execommand(client, "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml")
@@ -80,18 +82,20 @@ time.sleep(30)
 execommand(client, "kubectl get pods -A")
 
 join_command = execommand(client, "echo \"{}\" | sudo -S sudo kubeadm token create --print-join-command".format(password))
+print(join_command)
+join_command = ''.join(join_command)
 
 #######  Worker nodes
-host=workers
+host = workers
 for h in host:
     print("In Worker {}".format(h))
     client = getClient(h)
     execommand(client, "mkdir {}".format(folder))
-    execommand(client, join_command)
+    execommand(client, "echo \"{}\" | sudo -S {}".format(password, join_command))
 
-host=master
-print("In master ".format(host))
-time.sleep(70)
+host = master
+print("In master {}".format(host))
+time.sleep(30)
 client = getClient(host)
 execommand(client, "kubectl get nodes -o wide")
 execommand(client, "kubectl get pods --namespace=kube-system")
